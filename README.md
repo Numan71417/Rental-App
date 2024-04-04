@@ -1,4 +1,4 @@
-```markdown
+
 # A-Z Rental Platform
 
 Welcome to A-Z Rental Platform! This platform is built using Express.js, MySQL, and React, offering a comprehensive solution for managing rental listings.
