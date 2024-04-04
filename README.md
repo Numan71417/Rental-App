@@ -17,13 +17,13 @@ Follow these steps to set up and run the A-Z Rental Platform locally:
 1. Clone the repository to your local machine:
 
    ```
-   git clone <repository-url>
+   git clone https://github.com/Numan71417/Rental-App.git
    ```
 
 2. Navigate to the project directory:
 
    ```
-   cd a-z-rental-platform
+   cd Rental-App
    ```
 
 3. Install dependencies for both the server and client:
@@ -31,6 +31,7 @@ Follow these steps to set up and run the A-Z Rental Platform locally:
    ```
    cd server
    npm install
+   
    cd ../client
    npm install
    ```
@@ -58,17 +59,17 @@ Follow these steps to set up and run the A-Z Rental Platform locally:
 
    ```
    cd server
-   npm start
+   npm run dev
    ```
 
 2. Start the React client:
 
    ```
    cd client
-   npm start
+   npm run dev
    ```
 
-3. Access the application in your web browser at `http://localhost:3000`.
+3. Access the application in your web browser at `http://localhost:5173`.
 
 ## Usage
 
@@ -89,12 +90,4 @@ To use the application locally:
 5. Edit or delete existing listings from the "My Listings" page.
 6. Log out when finished using the application.
 
-## Contributing
 
-Contributions to the A-Z Rental Platform are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-```
-This markdown file will render as a nicely formatted README.md in your repository on platforms like GitHub.
