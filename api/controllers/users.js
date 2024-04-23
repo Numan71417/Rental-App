@@ -13,6 +13,21 @@ const getUsers = (req, res) => {
     });
 };
 
+const addUser = (req, res) => {
+    const {  name, email, password, mobile } = req.body;
+    const sql = 'INSERT INTO user (name, email, password, mobile) VALUES (?, ?, ?, ?)';
+    
+    connection.query(sql, [ name, email, password, mobile], (err, result) => {
+        if (err) {
+            console.log('Error', err);
+            return res.status(500).json({ error: 'Error inserting user' });
+        }
+        return res.status(200).json({ message: 'User inserted successfully', result });
+    });
+};
+
+
 module.exports = {
-    getUsers
+    getUsers,
+    addUser,
 };

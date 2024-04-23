@@ -1,20 +1,33 @@
-import { useState } from 'react'
-import './App.css'
+import styles from "./style";
+import { Billing, Business, CardDeal, Clients, CTA, Footer, Navbar, Stats, Testimonials, Hero } from "./components";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-
-
-  return (
-    <>
-      <div>
-       <h1 className="text-purple-500 text-3xl font-bold text-center mt-5">A-Z Rental Platform</h1>
-       <p className="text-xl text-center my-6">Rent any thing ∙ Any where ∙ Any time</p>
+const App = () => (
+  <div className="bg-primary w-full overflow-hidden">
+    <div className={`${styles.paddingX} ${styles.flexCenter}`}>
+      <div className={`${styles.boxWidth}`}>
+        <Navbar />
       </div>
-     
-    </>
-  )
-}
+    </div>
 
-export default App
+    <div className={`bg-primary ${styles.flexStart}`}>
+      <div className={`${styles.boxWidth}`}>
+        <Hero />
+      </div>
+    </div>
+    
+    <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
+      <div className={`${styles.boxWidth}`}>
+        <Stats />
+        <Business />
+        <Billing />
+        <CardDeal />
+        <Testimonials />
+        <Clients />
+        <CTA />
+        <Footer />
+      </div>
+    </div>
+  </div>
+);
+
+export default App;

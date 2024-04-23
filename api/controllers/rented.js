@@ -1,9 +1,9 @@
-// controllers/items.js
+// controllers/rented.js
 
 const connection = require("../dbConnec");
 
-const getItems = (req, res) => {
-    const sql = 'SELECT * FROM items';
+const getRented = (req, res) => {
+    const sql = 'SELECT * FROM rented';
     connection.query(sql, (err, result) => {
         if (err) {
             console.log('Error', err);
