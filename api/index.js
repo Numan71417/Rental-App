@@ -20,6 +20,10 @@ app.use('/api/v1/items', itemsRoutes);
 app.use('/api/v1/rental', rentalRoutes);
 app.use('/api/v1', authRoutes);
 
+app.get('/', (req,res)=>{
+    res.send("<h1> This api is working </h1>")
+})
+
 app.listen(port, () => {
     console.log(`server listening on port ${port}`);
 });
