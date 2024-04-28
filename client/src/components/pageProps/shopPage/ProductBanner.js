@@ -23,6 +23,7 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
 
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center justify-between">
+      
       {/* =========================================================
                             Left Part Start here
         ======================================================== */}
@@ -85,8 +86,10 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
           <span className="absolute text-sm right-3 top-2.5">
             <GoTriangleDown />
           </span>
+          
         </div>
       </div>
+      
       {/* =========================================================
                             Right Part End here
         ======================================================== */}

@@ -13,8 +13,8 @@ const ProductsOnSale = () => {
             key={item._id}
             className="flex items-center gap-4 border-b-[1px] border-b-gray-300 py-2"
           >
-            <div>
-              <img className="w-24" src={item.img} alt={item.img} />
+            <div >
+              <img className="w-24  bg-red-300" src={item.img} alt={item.img} />
             </div>
             <div className="flex flex-col gap-2 font-titleFont">
               <p className="text-base font-medium">{item.productName}</p>
