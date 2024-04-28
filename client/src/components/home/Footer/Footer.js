@@ -31,14 +31,14 @@ const Footer = () => {
     <div className="w-full bg-[#F5F5F3] py-5">
       <div className="max-w-container mx-auto flex items-center justify-around">
         <div className="col-span-2">
-          <FooterListTitle title=" Quick Links " />
+          <FooterListTitle title=" Social Media Links " />
           <div className="flex flex-col gap-6">
             <p className="text-base w-full xl:w-[80%]">
-              Renting Now is Hassle Free!
+              <strong>A-Z Rentals</strong> <br></br>Renting Now is Hassle Free!
             </p>
             <ul className="flex items-center gap-2">
               <a
-                href="https://www.youtube.com/@reactjsBD"
+                href=""
                 target="_blank"
                 rel="noreferrer"
               >
@@ -47,7 +47,7 @@ const Footer = () => {
                 </li>
               </a>
               <a
-                href="https://github.com/noorjsdivs"
+                href="https://github.com/Numan71417/Rental-App/"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -56,7 +56,7 @@ const Footer = () => {
                 </li>
               </a>
               <a
-                href="https://www.facebook.com/Noorlalu143/"
+                href=""
                 target="_blank"
                 rel="noreferrer"
               >
@@ -85,10 +85,7 @@ const Footer = () => {
             </li>
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
               Orders
-            </li>
-            
-            
-            
+            </li>        
           </ul>
         </div>
       </div>

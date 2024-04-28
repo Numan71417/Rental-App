@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import {
-  bannerImgOne,
-  bannerImgTwo,
-  bannerImgThree,
-} from "../../assets/images";
+import forent from "../../assets/images/newimg/forent-removebg-preview.png";
 import Image from "../designLayouts/Image";
 
 const CustomSlide = ({ Subtext, imgSrc, text, buttonLink, buttonText }) => (
@@ -22,6 +18,7 @@ const CustomSlide = ({ Subtext, imgSrc, text, buttonLink, buttonText }) => (
       style={{
         maxWidth: "450px", // Adjust the maxWidth as needed
         marginRight: "100px", // Add margin between text/button and image
+        paddingBottom:"20px"
       }}
     >
       <h1
@@ -44,7 +41,7 @@ const CustomSlide = ({ Subtext, imgSrc, text, buttonLink, buttonText }) => (
         {Subtext}
       </p>
 
-      <Link to="/about">
+      <Link to="/shop" >
         <button className="bg-primeColor text-white text-lg font-bodyFont w-[185px] h-[50px] hover:bg-black duration-300 font-bold">
           {buttonText}
         </button>
@@ -151,30 +148,13 @@ const Banner = () => {
 
   const slides = [
     {
-      imgSrc: bannerImgOne,
-      text: "Enhance Your Printing Experience",
+      imgSrc: forent,
+      text: "Discover a world of hassle-free rentals tailored just for you.",
       Subtext:
-        "Explore our premium printers and consumables for exceptional results",
-      buttonLink: "/offer",
-      buttonText: "Shop Now",
-    },
-    {
-      imgSrc: bannerImgOne,
-      text: "Quality Printing Solutions",
-      Subtext:
-        "Discover our wide range of printers and consumables designed for professional printing needs.",
+        "Discover a seamless platform where you can effortlessly upload your offerings and find the perfect rentals tailored to your requirements",
       buttonLink: "/shop",
-      buttonText: "About-us",
-    },
-    {
-      imgSrc: bannerImgOne,
-      text: "Efficiency Redefined",
-      Subtext:
-        "Maximize productivity with our advanced printers and high-quality consumables. ",
-      buttonLink: "/contact",
-      buttonText: "Contact-us",
-    },
-
+      buttonText: "Shop Now",
+    }
     // Add more slides as needed
   ];
   return (

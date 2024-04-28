@@ -86,9 +86,6 @@ const Product = (props) => {
           </h2>
           <p className="text-[#767676] text-[14px]">${props.price}</p>
         </div>
-        <div>
-          <p className="text-[#767676] text-[14px]">{props.color}</p>
-        </div>
       </div>
     </div>
   );
