@@ -17,7 +17,7 @@ app.use(cors());
 // routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/items', itemsRoutes);
-app.use('/api/v1/rental', rentalRoutes);
+app.use('/api/v1/rentals', rentalRoutes);
 app.use('/api/v1', authRoutes);
 
 app.get('/', (req,res)=>{

@@ -12,8 +12,8 @@ const getRented = (req, res) => {
            items.price AS item_price,
            items.category AS item_category,
            items.description AS item_desc,
-           items.image AS item_img,
-           items.other_image AS item_otherimg
+           items.photo AS item_img,
+           items.pic1 AS item_otherimg
     FROM rented 
     INNER JOIN user AS seller ON rented.seller = seller.id 
     INNER JOIN user AS renter ON rented.renter = renter.id 
@@ -42,8 +42,8 @@ const getSingleRented = (req, res) => {
              items.price AS item_price,
              items.category AS item_category,
              items.description AS item_desc,
-             items.image AS item_img,
-             items.other_image AS item_otherimg
+             items.photo AS item_img,
+             items.pic1 AS item_otherimg
       FROM rented 
       INNER JOIN user AS seller ON rented.seller = seller.id 
       INNER JOIN user AS renter ON rented.renter = renter.id 
