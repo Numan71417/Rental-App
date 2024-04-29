@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/', getUsers);
 router.get('/:id', authenticateToken, getUser);
-router.put('/edit/:id', authenticateToken, upload.single('photo'), editUser);
+router.put('/edit/:id', authenticateToken, editUser);
 router.put('/merchant/:id',authenticateToken, merchantAccount);
 router.delete('/delete/:id',authenticateToken, deleteUser);
 

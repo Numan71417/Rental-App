@@ -3,7 +3,7 @@
 const connection = require("../dbConnec");
 
 const getRented = (req, res) => {
-  // const sql = 'SELECT * FROM rented';
+
   const sql = `
     SELECT rented.*, 
            seller.name AS seller_name, 
@@ -94,7 +94,6 @@ const addRental = (req, res) => {
 const deleteRental = (req, res) => {
   const { rental_id } = req.params;
 
-  // Check if rentalId is provided
   if (!rental_id) {
     return res.status(400).json({ error: "Missing rentalId parameter" });
   }
@@ -110,7 +109,7 @@ const deleteRental = (req, res) => {
         .json({ error: "Failed to delete rental from the database" });
     }
 
-    // Check if any rows were affected by the delete operation
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "Rental not found" });
     }

@@ -56,20 +56,17 @@ const deleteUser = (req, res) => {
 
 const editUser = (req, res) => {
     const { id } = req.params;
-    const { name, email, mobile } = req.body;
+    const { name, email, mobile, photo } = req.body;
 
     // Check if id is provided
     if (!id) {
         return res.status(400).json({ error: 'Missing id parameter' });
     }
 
-    const image = req.file; 
-    const imageData = image.buffer;
 
-    // You can then store the image data in the database column for image
     const sql = 'UPDATE user SET name = ?, email = ?, mobile = ?, photo = ? WHERE id = ?';
 
-    connection.query(sql, [name, email, mobile, imageData, id], (err, result) => {
+    connection.query(sql, [name, email, mobile, photo, id], (err, result) => {
         if (err) {
             console.error('Error updating user:', err);
             return res.status(500).json({ error: 'Failed to update user details' });
@@ -90,12 +87,6 @@ const merchantAccount = (req, res) => {
 
     if (!id) {
         return res.status(400).json({ error: 'Missing id parameter' });
-    }
-
-    if(merchant===1){
-        merchant = 0;
-    }else{
-        merchant = 1;
     }
 
 

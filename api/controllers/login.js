@@ -2,16 +2,13 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const connection = require('../dbConnec');
 
-// Secret key for JWT
 const JWT_SECRET = process.env.JWT;
 
-// const users = [];
 
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Find user by email
         connection.query('SELECT * FROM user WHERE email = ?', [email], async (err, results) => {
             if (err) {
                 console.error('Error logging in user:', err);

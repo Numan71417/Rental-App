@@ -37,7 +37,7 @@ const getItem = (req, res) => {
 };
 
 const addItems = (req, res) => {
-    const { item_name, category, price, description,ownerId } = req.body;
+    const { item_name, category, price, description, ownerId } = req.body;
 
     // Check if all required fields are provided
     if (!item_name || !category || !price || !description || !ownerId) {
@@ -91,13 +91,13 @@ const deleteItem = (req, res) => {
 const editItems = (req, res) => {
     const { id } = req.params;
     const { item_name, category, price, description } = req.body;
-    const values = [item_name, category, price, description];
+    const values = [item_name, category, price, description, id];
 
     if (!id) {
         return res.status(400).json({ error: 'Missing id parameter' });
     }
 
-    const sql = 'UPDATE item SET item_name = ?, category = ?, price = ?, description = ? WHERE id = ?';
+    const sql = 'UPDATE items SET item_name = ?, category = ?, price = ?, description = ? WHERE id = ?';
 
     connection.query(sql, values, (err, result) => {
         if (err) {
