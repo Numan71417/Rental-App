@@ -32,20 +32,18 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
         <span
           className={`${
             girdViewActive
-              ? "bg-primeColor text-white"
-              : "border-[1px] border-gray-300 text-[#737373]"
+              ? "bg-white text-white"
+              : "border-[1px] text-white"
           } w-8 h-8 text-lg flex items-center justify-center cursor-pointer gridView`}
         >
-          <BsGridFill />
         </span>
         <span
           className={`${
             listViewActive
-              ? "bg-primeColor text-white"
-              : "border-[1px] border-gray-300 text-[#737373]"
+              ? "bg-white text-white"
+              : "border-[1px]text-white"
           } w-8 h-8 text-base flex items-center justify-center cursor-pointer listView`}
         >
-          <ImList />
         </span>
       </div>
       {/* =========================================================
@@ -62,10 +60,9 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
             id="countries"
             className="w-32 md:w-52 border-[1px] border-gray-200 py-1 px-4 cursor-pointer text-primeColor text-base block dark:placeholder-gray-400 appearance-none focus-within:outline-none focus-visible:border-primeColor"
           >
-            <option value="Best Sellers">Best Sellers</option>
-            <option value="New Arrival">New Arrival</option>
             <option value="Featured">Featured</option>
-            <option value="Final Offer">Final Offer</option>
+            <option value="Low to High">Low to High</option>
+            <option value="High to Low">High to Low</option>
           </select>
           <span className="absolute text-sm right-2 md:right-4 top-2.5">
             <GoTriangleDown />
