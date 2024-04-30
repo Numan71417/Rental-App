@@ -6,6 +6,11 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
+import firebaseConfig from "./firebase.config";
+import firebase from 'firebase/compat/app'
+
+
+firebase.initializeApp(firebaseConfig)
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

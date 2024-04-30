@@ -1,72 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getUser, becomeMerchant } from "../../api/users";
+import { saveToLocal } from "../../api/savetoLocal";
+
 
 const Profilepage = ({  onUpdate, onDelete }) => {
-  const user = {name : null,
-  image : null,
-email : null ,
-id : null,
-};
+  const [user, setUser] = useState({})
+
   const [isEditing, setIsEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState(user);
+  const [editedUser, setEditedUser] = useState('');
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
 
-  const handleDeleteClick = () => {
-    onDelete(user.id);
-  };
+useEffect(() => {
+  getUser()
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  if (userData) {
+      setUser(userData);
+  }
+}, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditedUser({ ...editedUser, [name]: value });
-  };
+  console.log(user.merchant);
+  
 
-  const handleSaveClick = () => {
-    onUpdate(editedUser);
-    setIsEditing(false);
-  };
-
-  const handleCancelClick = () => {
-    setIsEditing(false);
-    setEditedUser(user);
-  };
+  const makeMerchant = async () => {
+    try {
+        if (user) {
+            const newData = { ...user, merchant: 1 };
+            await becomeMerchant(newData);
+            saveToLocal('userData', newData)
+            setUser(newData); 
+        }
+    } catch (error) {
+        console.error('Error making user a merchant:', error);
+    }
+};
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-xl mx-auto mb-8">
-        <img className="w-full h-56 object-cover object-center" src={user.photo} alt={user.name} />
-        <div className="p-4">
-          <h2 className="text-gray-800 text-2xl font-semibold">{user.name}</h2>
-          <p className="text-gray-600">{user.email}</p>
-        </div>
+   <div className="flex">
+      {/* side bar */}
+      <div className="flex flex-col border bg-slate-600">
+        <ul>
+          <li>Home</li>
+          {
+            user.merchant ?
+            <li>Rent your Product</li>
+            :
+            <button className={'p-2 bg-slate-800 rounded-md text-blue-400'} onClick={makeMerchant}>Become a Merchant</button>
+          }
+          <li>log out</li>
+          <li>delete your account</li>
+        </ul>
       </div>
-      {!isEditing && (
-        <div className="flex">
-          <button onClick={handleEditClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Edit
-          </button>
-          <button onClick={handleDeleteClick} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4">
-            Delete
-          </button>
-        </div>
-      )}
-      {isEditing && (
-        <div className="mt-8">
-          <input type="text" name="name" value={editedUser.name} onChange={handleChange} className="border rounded px-2 py-1 mb-4" />
-          <input type="email" name="email" value={editedUser.email} onChange={handleChange} className="border rounded px-2 py-1 mb-4" />
-          <input type="text" name="photo" value={editedUser.photo} onChange={handleChange} className="border rounded px-2 py-1 mb-4" />
-          <div>
-            <button onClick={handleSaveClick} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-              Save
-            </button>
-            <button onClick={handleCancelClick} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-4">
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+   </div>
   );
 };
 

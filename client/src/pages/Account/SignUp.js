@@ -1,64 +1,68 @@
 import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, redirect, useLocation } from "react-router-dom";
 import { logoLight } from "../../assets/images";
+import { api, registerUser } from "../../api";
 
 const SignUp = () => {
-  // ============= Initial State Start here =============
-  const [clientName, setClientName] = useState("");
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [mobile, setmobile] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [zip, setZip] = useState("");
+
+const navigate =  useLocation()
+
+  // const [address, setAddress] = useState("");
+  // const [city, setCity] = useState("");
+  // const [country, setCountry] = useState("");
+  // const [zip, setZip] = useState("");
   const [checked, setChecked] = useState(false);
   // ============= Initial State End here ===============
   // ============= Error Msg Start here =================
   const [errClientName, setErrClientName] = useState("");
   const [errEmail, setErrEmail] = useState("");
-  const [errPhone, setErrPhone] = useState("");
+  const [errmobile, setErrmobile] = useState("");
   const [errPassword, setErrPassword] = useState("");
-  const [errAddress, setErrAddress] = useState("");
-  const [errCity, setErrCity] = useState("");
-  const [errCountry, setErrCountry] = useState("");
-  const [errZip, setErrZip] = useState("");
-  // ============= Error Msg End here ===================
+  // const [errAddress, setErrAddress] = useState("");
+  // const [errCity, setErrCity] = useState("");
+  // const [errCountry, setErrCountry] = useState("");
+  // const [errZip, setErrZip] = useState("");
+  // // ============= Error Msg End here ===================
   const [successMsg, setSuccessMsg] = useState("");
   // ============= Event Handler Start here =============
   const handleName = (e) => {
-    setClientName(e.target.value);
+    setName(e.target.value);
     setErrClientName("");
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail("");
   };
-  const handlePhone = (e) => {
-    setPhone(e.target.value);
-    setErrPhone("");
+  const handlemobile = (e) => {
+    setmobile(e.target.value);
+    setErrmobile("");
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setErrPassword("");
   };
-  const handleAddress = (e) => {
-    setAddress(e.target.value);
-    setErrAddress("");
-  };
-  const handleCity = (e) => {
-    setCity(e.target.value);
-    setErrCity("");
-  };
-  const handleCountry = (e) => {
-    setCountry(e.target.value);
-    setErrCountry("");
-  };
-  const handleZip = (e) => {
-    setZip(e.target.value);
-    setErrZip("");
-  };
+  // const handleAddress = (e) => {
+  //   setAddress(e.target.value);
+  //   setErrAddress("");
+  // };
+  // const handleCity = (e) => {
+  //   setCity(e.target.value);
+  //   setErrCity("");
+  // };
+  // const handleCountry = (e) => {
+  //   setCountry(e.target.value);
+  //   setErrCountry("");
+  // };
+  // const handleZip = (e) => {
+  //   setZip(e.target.value);
+  //   setErrZip("");
+  // };
   // ============= Event Handler End here ===============
   // ================= Email Validation start here =============
   const EmailValidation = (email) => {
@@ -71,7 +75,7 @@ const SignUp = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
     if (checked) {
-      if (!clientName) {
+      if (!name) {
         setErrClientName("Enter your name");
       }
       if (!email) {
@@ -81,8 +85,8 @@ const SignUp = () => {
           setErrEmail("Enter a Valid email");
         }
       }
-      if (!phone) {
-        setErrPhone("Enter your phone number");
+      if (!mobile) {
+        setErrmobile("Enter your mobile number");
       }
       if (!password) {
         setErrPassword("Create a password");
@@ -91,42 +95,47 @@ const SignUp = () => {
           setErrPassword("Passwords must be at least 6 characters");
         }
       }
-      if (!address) {
-        setErrAddress("Enter your address");
-      }
-      if (!city) {
-        setErrCity("Enter your city name");
-      }
-      if (!country) {
-        setErrCountry("Enter the country you are residing");
-      }
-      if (!zip) {
-        setErrZip("Enter the zip code of your area");
-      }
+      // if (!address) {
+      //   setErrAddress("Enter your address");
+      // }
+      // if (!city) {
+      //   setErrCity("Enter your city name");
+      // }
+      // if (!country) {
+      //   setErrCountry("Enter the country you are residing");
+      // }
+      // if (!zip) {
+      //   setErrZip("Enter the zip code of your area");
+      // }
       // ============== Getting the value ==============
       if (
-        clientName &&
+        name &&
         email &&
         EmailValidation(email) &&
         password &&
-        password.length >= 6 &&
-        address &&
-        city &&
-        country &&
-        zip
+        password.length >= 6 
+        // address &&
+        // city &&
+        // country &&
+        // zip
       ) {
         setSuccessMsg(
-          `Hello dear ${clientName}, Welcome you to OREBI Admin panel. We received your Sign up request. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
+          `Hello dear ${name}, Welcome you to OREBI Admin panel. We received your Sign up request. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
         );
-        setClientName("");
+        setName("");
         setEmail("");
-        setPhone("");
+        setmobile("");
         setPassword("");
-        setAddress("");
-        setCity("");
-        setCountry("");
-        setZip("");
+        // setAddress("");
+        // setCity("");
+        // setCountry("");
+        // setZip("");
       }
+
+      const userData = { name, email, password, mobile ,photo:'' }
+      console.log(userData);
+      console.log(registerUser(userData));
+     
     }
   };
   return (
@@ -223,7 +232,7 @@ const SignUp = () => {
                   </p>
                   <input
                     onChange={handleName}
-                    value={clientName}
+                    value={name}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
                     placeholder="eg. John Doe"
@@ -254,22 +263,22 @@ const SignUp = () => {
                     </p>
                   )}
                 </div>
-                {/* Phone Number */}
+                {/* mobile Number */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
-                    Phone Number
+                    mobile Number
                   </p>
                   <input
-                    onChange={handlePhone}
-                    value={phone}
+                    onChange={handlemobile}
+                    value={mobile}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
                     placeholder="008801234567891"
                   />
-                  {errPhone && (
+                  {errmobile && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
                       <span className="font-bold italic mr-1">!</span>
-                      {errPhone}
+                      {errmobile}
                     </p>
                   )}
                 </div>

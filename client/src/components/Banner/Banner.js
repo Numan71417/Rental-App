@@ -16,16 +16,16 @@ const CustomSlide = ({ Subtext, imgSrc, text, buttonLink, buttonText }) => (
   >
     <div
       style={{
-        maxWidth: "450px", // Adjust the maxWidth as needed
-        marginRight: "100px", // Add margin between text/button and image
+        maxWidth: "450px", 
+        marginRight: "100px", 
         paddingBottom:"20px"
       }}
     >
       <h1
         style={{
           marginBottom: "15px",
-          fontSize: "2.5rem", // Adjust the font size as needed
-          color: "#000", // Black color
+          fontSize: "2.5rem", 
+          color: "#000", 
           fontWeight: "700",
         }}
       >

@@ -26,8 +26,16 @@ import Shop from "./pages/Shop/Shop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profilepage from "./pages/profile/Profilepage";
+import { getAccessToken } from "./api";
+import AddItems from "./pages/AddProducts/AddItems";
 
 const Layout = () => {
+
+  if(getAccessToken() === null){
+    window.location.href = '/signin'
+  }
+
+
   return (
     <div>
       <ToastContainer
@@ -59,7 +67,8 @@ const router = createBrowserRouter(
         <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
-        <Route path="/contact" element={<Profilepage />}></Route>
+        <Route path="/profile" element={<Profilepage />}></Route>
+        <Route path="/additem" element={<AddItems />}></Route>
         <Route path="/journal" element={<Journal />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/category/:category" element={<Offer />}></Route>

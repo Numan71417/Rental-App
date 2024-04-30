@@ -1,39 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
 import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
+import { getAllItems } from "../../../api/items";
 
 const items = paginationItems;
 
 function Items({ currentItems, selectedBrands, selectedCategories }) {
   // Filter items based on selected brands and categories
-  const filteredItems = currentItems.filter((item) => {
-    const isBrandSelected =
-      selectedBrands.length === 0 ||
-      selectedBrands.some((brand) => brand.title === item.brand);
+  // const filteredItems = currentItems.filter((item) => {
+  //   const isBrandSelected =
+  //     selectedBrands.length === 0 ||
+  //     selectedBrands.some((brand) => brand.title === item.brand);
 
-    const isCategorySelected =
-      selectedCategories.length === 0 ||
-      selectedCategories.some((category) => category.title === item.cat);
+  //   const isCategorySelected =
+  //     selectedCategories.length === 0 ||
+  //     selectedCategories.some((category) => category.title === item.cat);
 
-    return isBrandSelected && isCategorySelected;
-  });
+  //   return isBrandSelected && isCategorySelected;
+  // });
+
+  const [itemss, setItems] = useState([])
+
+  useEffect(()=>{
+    getAllItems(setItems)
+  },[])
+
+  console.log(itemss);
 
   return (
     <>
-      {filteredItems.map((item) => (
-        <div key={item._id} className="w-full">
+      {itemss.map((item) => (
+        <div key={item.id} className="w-full">
           <Product
-            _id={item._id}
+            id={item.id}
             img={item.img}
-            productName={item.productName}
+            productName={item.item_name}
             price={item.price}
-            color={item.color}
-            badge={item.badge}
-            des={item.des}
-            pdf={item.pdf}
-            ficheTech={item.ficheTech}
           />
         </div>
       ))}
