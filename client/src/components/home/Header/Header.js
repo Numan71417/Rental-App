@@ -6,12 +6,13 @@ import { motion } from "framer-motion";
 import { logo, logoLight } from "../../../assets/images";
 import Image from "../../designLayouts/Image";
 import { navBarList } from "../../../constants";
+import { getUser } from "../../../api/users";
 import Flex from "../../designLayouts/Flex";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(true);
   const [sidenav, setSidenav] = useState(false);
-  const [category, setCategory] = useState(false);
+  const [userD, setUserData] = useState({});
   const [brand, setBrand] = useState(false);
   const location = useLocation();
   useEffect(() => {
@@ -26,6 +27,10 @@ const Header = () => {
     window.addEventListener("resize", ResponsiveMenu);
   }, []);
 
+  const user = JSON.parse(localStorage.getItem("userData"));
+
+  console.log("userData-----------" + user);
+
   return (
     <div className="w-full h-20 bg-white sticky top-0 z-50 border-b-[1px] border-b-gray-200">
       <nav className="h-full px-4 max-w-container mx-auto relative">
@@ -34,9 +39,9 @@ const Header = () => {
             <div>
               {/* <Image className="w-32 object-cover" imgSrc={logo} />
                */}
-               <div className="text-2xl text-slate-900 font-bold" >
-                  A-Z Rentals
-               </div>
+              <div className="text-2xl text-slate-900 font-bold">
+                A-Z Rentals
+              </div>
             </div>
           </Link>
           <div>
@@ -58,6 +63,22 @@ const Header = () => {
                       <li>{title}</li>
                     </NavLink>
                   ))}
+
+                  {user ? (
+                    <Link to={'/profile'}>
+                      <img
+                        src={user.photo}
+                        className="w-14 rounded-full "
+                        alt="profile"
+                      />
+                      <span className="flex justify-center items-center capitalize">
+
+                      {user.name}
+                      </span>
+                    </Link>
+                  ) : (
+                    <Link to="/signin">Login</Link>
+                  )}
                 </>
               </motion.ul>
             )}
@@ -91,44 +112,6 @@ const Header = () => {
                         </li>
                       ))}
                     </ul>
-
-                    {/* <div className="mt-4">
-                      <h1
-                        onClick={() => setCategory(!category)}
-                        className="flex justify-between text-base cursor-pointer items-center font-titleFont mb-2"
-                      >
-                        Shop by Category{" "}
-                        <span className="text-lg">{category ? "-" : "+"}</span>
-                      </h1>
-                      {category && (
-                        <motion.ul
-                          initial={{ y: 15, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ duration: 0.4 }}
-                          className="text-sm flex flex-col gap-1"
-                        >
-                          <li className="headerSedenavLi">New Arrivals</li>
-                          <li className="headerSedenavLi">Gudgets</li>
-                          <li className="headerSedenavLi">Accessories</li>
-                          <li className="headerSedenavLi">Electronics</li>
-                          <li className="headerSedenavLi">Others</li>
-                        </motion.ul>
-                      )}
-                    </div> */}
-
-                    <div className="mt-4">
-                      
-                      {brand && (
-                        <motion.ul
-                          initial={{ y: 15, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ duration: 0.4 }}
-                          className="text-sm flex flex-col gap-1"
-                        >
-                          
-                        </motion.ul>
-                      )}
-                    </div>
                   </div>
                   <span
                     onClick={() => setSidenav(false)}

@@ -22,7 +22,7 @@ export const getAllItems = async (setItems) => {
             const data = await response.json();
             console.log(data);
             setItems(data)
-            return data;
+            // return data;
         } else {
             console.log('Error:', response.statusText);
             throw new Error('Failed to fetch items');
@@ -35,17 +35,21 @@ export const getAllItems = async (setItems) => {
 
 export const addItems = async (formData)=>{
     try {
-
+        console.log(formData);
         // Post form data to the API endpoint
-        const response = await fetch(api+'/items/', {
+        const response = await fetch(api+'/items/add', {
             method: 'POST',
-            body: formData
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         });
 
         if (response.ok) {
             console.log('Product added successfully!');
             saveToLocal('yourProducts',formData )
-            window.location.href = '/shop'
+            
             return true
         } else {
             console.error('Error:', response.statusText);
@@ -54,5 +58,34 @@ export const addItems = async (formData)=>{
     } catch (error) {
         console.error('Error:', error);
         alert('Failed to add product. Please try again.');
+    }
+}
+
+export const getItemById = async(setItem, id) => {
+    try {
+        if (!accessToken) {
+            throw new Error('Access token not found');
+        }
+
+        const response = await fetch(api + '/items/'+id, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("single item-------"+data);
+            setItem(data[0])
+            // return data;
+        } else {
+            console.log('Error:', response.statusText);
+            throw new Error('Failed to fetch items');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        throw new Error('Failed to fetch items');
     }
 }

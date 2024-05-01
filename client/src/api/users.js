@@ -23,9 +23,9 @@ export const getUser = async () => {
 
         if (response.ok) {
             const data = await response.json();
-            // console.log(data[0]);
+            console.log(data[0]);
             saveToLocal('userData', data[0])
-            return data[0];
+            // return data[0];
         } else {
             console.log('Error:', response.statusText);
             throw new Error('Failed to fetch users');
@@ -74,7 +74,7 @@ export const becomeMerchant = async (newData) => {
             throw new Error('Access token not found');
         }
 
-        const response = await fetch(api + '/users/edit/' + userId, {
+        const response = await fetch(api + '/users/merchant/' + userId, {
             method: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -84,7 +84,7 @@ export const becomeMerchant = async (newData) => {
         });
 
         if (response.ok) {
-            const updatedData = await response.json();
+            // const updatedData = await response.json();
             console.log('User updated to merchant');
             getUser()
         } else {
@@ -96,5 +96,16 @@ export const becomeMerchant = async (newData) => {
         throw new Error('Failed to update user');
     }
 };
+
+// export function getUserData() {
+//     const userDataJSON = localStorage.getItem('userData');
+//     var obj ={};
+//     if (userDataJSON) {
+//         obj = JSON.parse(userDataJSON);
+//         return obj;
+//     } else {
+//         return {}; 
+//     }
+// }
 
 

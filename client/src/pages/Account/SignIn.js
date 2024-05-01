@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
-import { loginUser } from "../../api";
+import { getAccessToken, loginUser } from "../../api";
 
 const SignIn = () => {
+
+  if(getAccessToken()){
+    window.location.href = '/'
+  }
+
+
   // ============= Initial State Start here =============
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

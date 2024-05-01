@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import ProductInfo from "../../components/pageProps/productDetails/ProductInfo";
 import { FaDownload } from "react-icons/fa";
+import { getAllItems, getItemById } from "../../api/items";
 
 const tabs = [
   {
@@ -35,17 +36,24 @@ const tabs = [
 const ProductDetails = () => {
   const location = useLocation();
   const [prevLocation, setPrevLocation] = useState("");
-  const [productInfo, setProductInfo] = useState([]);
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const [productInfo, setProductInfo] = useState({});
+  // const [productId, setProductId] = useState("");
+  // const [activeTab, setActiveTab] = useState(tabs[0].id);
 
-  const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
-  };
-
+ 
   useEffect(() => {
     setProductInfo(location.state.item);
     setPrevLocation(location.pathname);
   }, [location, productInfo.ficheTech]);
+
+  console.log(productInfo);
+
+  console.log("product info--------"+productInfo);
+
+  const singleProduct = {}
+  // productInfo?.filter(item => item.id === productId)
+
+  // console.log("single product " + singleProduct);
 
   return (
     <div className="w-full mx-auto border-b-[1px] border-b-gray-300">
@@ -57,8 +65,8 @@ const ProductDetails = () => {
           <div className="h-full xl:col-span-2">
             <img
               className="w-full h-full "
-              src={productInfo.img}
-              alt={productInfo.img}
+              src={productInfo.photo }
+              alt={productInfo.photo}
             />
           </div>
           <div className="h-full w-full md:col-span-2 xl:col-span-4 xl:px-4 flex flex-col gap-6 justify-center">

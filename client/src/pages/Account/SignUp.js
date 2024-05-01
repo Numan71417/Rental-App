@@ -2,16 +2,21 @@ import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link, redirect, useLocation } from "react-router-dom";
 import { logoLight } from "../../assets/images";
-import { api, registerUser } from "../../api";
+import { api, getAccessToken, registerUser } from "../../api";
+import { toast } from "react-toastify";
+import { uploadToFirebase } from "../../api/firebaseUpload";
 
 const SignUp = () => {
+
+  if(getAccessToken()){
+    window.location.href = '/'
+  }
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setmobile] = useState("");
   const [password, setPassword] = useState("");
-
-const navigate =  useLocation()
+  const [photo, setPhoto] = useState("")
 
   // const [address, setAddress] = useState("");
   // const [city, setCity] = useState("");
@@ -29,7 +34,7 @@ const navigate =  useLocation()
   // const [errCountry, setErrCountry] = useState("");
   // const [errZip, setErrZip] = useState("");
   // // ============= Error Msg End here ===================
-  const [successMsg, setSuccessMsg] = useState("");
+  // const [successMsg, setSuccessMsg] = useState("");
   // ============= Event Handler Start here =============
   const handleName = (e) => {
     setName(e.target.value);
@@ -47,6 +52,13 @@ const navigate =  useLocation()
     setPassword(e.target.value);
     setErrPassword("");
   };
+
+  const handleImage = async(e)=>{
+    const file = e.target.files[0]
+    const url = await uploadToFirebase(file)
+    console.log("url check",url);
+    setPhoto(url)
+}
   // const handleAddress = (e) => {
   //   setAddress(e.target.value);
   //   setErrAddress("");
@@ -119,22 +131,18 @@ const navigate =  useLocation()
         // country &&
         // zip
       ) {
-        setSuccessMsg(
-          `Hello dear ${name}, Welcome you to OREBI Admin panel. We received your Sign up request. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
-        );
+       
         setName("");
         setEmail("");
         setmobile("");
         setPassword("");
-        // setAddress("");
-        // setCity("");
-        // setCountry("");
-        // setZip("");
       }
 
-      const userData = { name, email, password, mobile ,photo:'' }
-      console.log(userData);
+      const userData = { name, email, password, mobile ,photo }
+      // console.log(userData);
       console.log(registerUser(userData));
+      toast.success("Registered successfully")
+      window.location.href = '/signin';
      
     }
   };
@@ -142,9 +150,7 @@ const navigate =  useLocation()
     <div className="w-full h-screen flex items-center justify-start">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
         <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center">
-          <Link to="/">
-            <img src={logoLight} alt="logoImg" className="w-28" />
-          </Link>
+         <h1 className="text-2xl font">A-Z Rentals</h1>
           <div className="flex flex-col gap-1 -mt-1">
             <h1 className="font-titleFont text-xl font-medium">
               Get started for free
@@ -204,21 +210,7 @@ const navigate =  useLocation()
         </div>
       </div>
       <div className="w-full lgl:w-[500px] h-full flex flex-col justify-center">
-        {successMsg ? (
-          <div className="w-[500px]">
-            <p className="w-full px-4 py-10 text-green-500 font-medium font-titleFont">
-              {successMsg}
-            </p>
-            <Link to="/signin">
-              <button
-                className="w-full h-10 bg-primeColor rounded-md text-gray-200 text-base font-titleFont font-semibold 
-            tracking-wide hover:bg-black hover:text-white duration-300"
-              >
-                Sign in
-              </button>
-            </Link>
-          </div>
-        ) : (
+      
           <form className="w-full lgl:w-[500px] h-screen flex items-center justify-center">
             <div className="px-6 py-4 w-full h-[96%] flex flex-col justify-start overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
               <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-2xl mdl:text-3xl mb-4">
@@ -301,6 +293,17 @@ const navigate =  useLocation()
                     </p>
                   )}
                 </div>
+
+                <div className="flex gap-2"> 
+         <label htmlFor="image1">Profile Picture:</label>
+         <input
+             type="file"
+             id="image1"
+             accept="image/*"
+             onChange={(e)=>handleImage(e)}
+             required
+             />
+     </div>
                 
                 {/* Checkbox */}
                 <div className="flex items-start mdl:items-center gap-2">
@@ -336,7 +339,7 @@ const navigate =  useLocation()
               </div>
             </div>
           </form>
-        )}
+        
       </div>
     </div>
   );

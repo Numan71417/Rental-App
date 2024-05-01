@@ -1,53 +1,75 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/orebiSlice";
+import { getUserID } from "../../../api";
 
 const ProductInfo = ({ productInfo }) => {
-  const highlightStyle = {
-    color: "#d0121a", // Change this to the desired color
-    fontWeight: "bold", // Change this to the desired font weight
-  };
-
-  const renderDescription = () => {
-    if (!productInfo.des) {
-      return null; // or handle accordingly if product.des is not defined
-    }
-
-    const description = productInfo.des.split(/:(.*?)-/).map((part, index) => {
-      return (
-        <span key={index} style={index % 2 === 1 ? highlightStyle : {}}>
-          {part}
-        </span>
-      );
-    });
-
-    return <>{description}</>;
-  };
+  const {
+    id,
+    photo,
+    item_name,
+    price,
+    owner_name,
+    owner,
+    category,
+    description,
+    pic2,
+  } = productInfo;
+const usrid = getUserID()
+console.log(usrid, owner);
   const dispatch = useDispatch();
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-4xl font-semibold">{productInfo.productName}</h2>
+      <h2 className="text-4xl font-semibold">{item_name}</h2>
       <p className="text-2xl font-semibold">
-        {productInfo.price} Dt
-        
+        Rent {" : "} ₹ {price} /Day
       </p>
       <hr />
-      <p className="text-base text-gray-600">{renderDescription()}</p>
 
-      
+      <h1 className="text-2xl font-bold text-gray-600">Product Details</h1>
+      <div className="flex border justify-between">
+        <div className="p-3 text-lg w-full border">
+          Category
+          <p className="text-xl font-bold text-slate-800">
+            {" : " + category}
+          </p>
+        </div>
+        <div className="p-3 text-lg w-full border">
+        Owner Name
+          <p className="text-xl font-bold text-slate-800">
+            {" : " +   owner_name}
+          </p>
+        </div>
+        <div className="p-3 text-lg w-full border">
+        Delivery Charges
+          <p className="text-xl font-bold text-slate-800">
+            {" : ₹20/-"}
+          </p>
+        </div>
+      </div>
 
-      
-      <button
+      <div className="text-base text-gray-600">
+        <h2 className="text-xl font-bold">Description</h2>
+        <p>{description}</p>
+      </div>
+
+     {  owner == usrid ?
+      <div className="flex text-xl font-bold bg-slate-900 text-white p-3">You are the owner , You cannot rent this</div>
+      :
+     <button
         onClick={() =>
           dispatch(
             addToCart({
-              _id: productInfo.id,
-              name: productInfo.productName,
+              _id: id,
+              name: item_name,
               quantity: 1,
-              image: productInfo.img,
-              badge: productInfo.badge,
-              price: productInfo.price,
-              colors: productInfo.color,
+              image: photo,
+              badge: pic2,
+              price: price,
+              category,
+              description,
+              owner_name,
+              owner,
             })
           )
         }
@@ -55,10 +77,7 @@ const ProductInfo = ({ productInfo }) => {
       >
         Add to Cart
       </button>
-      <p className="font-normal text-sm">
-        <span className="text-base font-medium"> Categories:</span> Spring
-        collection, Streetwear, Women Tags: featured SKU: N/A
-      </p>
+     }
     </div>
   );
 };

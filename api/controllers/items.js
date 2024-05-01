@@ -37,7 +37,7 @@ const getItem = (req, res) => {
 };
 
 const addItems = (req, res) => {
-    const { item_name, category, price, description, ownerId } = req.body;
+    const { item_name, category, price, description, ownerId, photo, pic1 } = req.body;
 
     // Check if all required fields are provided
     if (!item_name || !category || !price || !description || !ownerId) {
@@ -50,8 +50,8 @@ const addItems = (req, res) => {
     }
 
     // Sanitize inputs to prevent SQL injection
-    const sql = 'INSERT INTO items (item_name, category, price, description, owner) VALUES (?, ?, ?, ?, ?)';
-    const values = [item_name, category, price, description, ownerId];
+    const sql = 'INSERT INTO items (item_name, category, price, description, owner, photo, pic1) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const values = [item_name, category, price, description, ownerId, photo, pic1];
 
     connection.query(sql, values, (err, result) => {
         if (err) {

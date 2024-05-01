@@ -1,56 +1,161 @@
 import React, { useEffect, useState } from "react";
 import { getUser, becomeMerchant } from "../../api/users";
 import { saveToLocal } from "../../api/savetoLocal";
+import { Link } from "react-router-dom";
+import { getUserID, logout } from "../../api";
+import { myRentals } from "../../api/rental";
+import { toast } from "react-toastify";
+import CountdownTimer from "./CountDown";
 
+const userID = getUserID();
 
-const Profilepage = ({  onUpdate, onDelete }) => {
-  const [user, setUser] = useState({})
+const Profilepage = ({ onUpdate, onDelete }) => {
+  const [user, setUser] = useState({});
+  const [rentals, setRenatls] = useState([]);
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [editedUser, setEditedUser] = useState("");
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState('');
+  useEffect(() => {
+    getUser();
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    console.log(userData);
+    setUser(userData);
+  }, []);
 
+  useEffect(() => {
+    myRentals(setRenatls);
+  }, []);
 
-useEffect(() => {
-  getUser()
-  const userData = JSON.parse(localStorage.getItem('userData'));
-  if (userData) {
-      setUser(userData);
-  }
-}, []);
-
-  console.log(user.merchant);
-  
+  console.log("merchant: ", user);
+  console.log("our renatls", rentals);
 
   const makeMerchant = async () => {
     try {
-        if (user) {
-            const newData = { ...user, merchant: 1 };
-            await becomeMerchant(newData);
-            saveToLocal('userData', newData)
-            setUser(newData); 
-        }
+      if (user) {
+        const newData = { ...user, merchant: 1 };
+        await becomeMerchant(newData);
+        console.log("new data", newData);
+        // saveToLocal("userData", newData);
+        setUser(newData);
+      }
     } catch (error) {
-        console.error('Error making user a merchant:', error);
+      console.error("Error making user a merchant:", error);
     }
-};
+  };
+
+  const getFormattedDate = (dateTime)=>{
+    console.log(dateTime);
+    const dt = new Date(dateTime);
+    return "Date: "+dt.getDate()+"/"+dt.getMonth()+"/"+dt.getFullYear()+" Time: "+dt.getHours()+":"+dt.getMinutes()
+  }
 
   return (
-   <div className="flex">
+    <>
+    <div className="flex w-full my-4 mx-10 gap-9 justify-around">
       {/* side bar */}
-      <div className="flex flex-col border bg-slate-600">
-        <ul>
+      <div className="flex flex-col  border bg-slate-600 text-white px-2 py-1 md:w-[25%] m-3">
+        <ul className="p-2 flex flex-col gap-3">
           <li>Home</li>
-          {
-            user.merchant ?
-            <li>Rent your Product</li>
-            :
-            <button className={'p-2 bg-slate-800 rounded-md text-blue-400'} onClick={makeMerchant}>Become a Merchant</button>
-          }
-          <li>log out</li>
+
+          {user?.merchant === 1 ? (
+            <Link to={"/additem"}>
+              <button className=" underline cursor-pointer">
+                Rent your Product
+              </button>
+            </Link>
+          ) : (
+            <button className={"underline"} onClick={makeMerchant}>
+              Become a Merchant
+            </button>
+          )}
+
+          <li
+            className=" underline text-red-500 cursor-pointer"
+            onClick={logout}
+          >
+            log out
+          </li>
+
           <li>delete your account</li>
         </ul>
       </div>
-   </div>
+
+      {/* middle bar */}
+      <div className="flex flex-col">
+        <div>
+          {user?.merchant ? (
+            <div className="bg-green-300 rounded-sm p-2">
+              "Your are Merchant!"
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+
+        {user && (
+          <div className="flex flex-col my-5 mx-2">
+            <div className="flex justify-center align-middle items-center  ">
+              <img
+                src={user.photo}
+                className="rounded-full"
+                alt={user.name}
+                width={"200px"}
+              />
+            </div>
+
+            <div className=" flex gap-2">
+              <p className="text-xl font-bold ">User Name: </p>
+              <p>{user.name}</p>
+            </div>
+
+            <div className=" flex gap-2">
+              <p className="text-xl font-bold ">Email: </p>
+              <p>{user.email}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <p className="text-xl font-bold ">Mobile no: </p>
+              <p>{user.mobile}</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+    </div>
+    
+      <div className="flex flex-col  my-9  mx-16 px-12">
+        <h1 className="text-2xl font-bold underline my-3">Your Rented list</h1>
+        <div className="flex flex-col gap-2">
+          <table>
+            <thead>
+              <tr>
+                <th className="font-bold border bg-slate-700 text-white">Product image</th>
+                <th className="font-bold border bg-slate-700 text-white">Product Name</th>
+                <th className="font-bold border bg-slate-700 text-white">Returning date</th>
+                <th className="font-bold border bg-slate-700 text-white">Paid</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rentals?.map((r) => (
+                <tr key={r.id}>
+                  <td className="border flex justify-center items-end p-3">
+                    <img src={r.item_img} alt={r.item_name} width={"150px"} />
+                  </td>
+                  <td className="border ">{r.item_name}</td>
+                  <td className="border ">
+                    {getFormattedDate(r.expire)}
+                    <br />
+                    <CountdownTimer dateTime={r.expire}/>
+
+                  </td>
+                  <td className="border ">{"₹ "+r.item_price* new Date(r.expire).getDate()} </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </>
   );
 };
 

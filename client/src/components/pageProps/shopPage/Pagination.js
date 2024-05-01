@@ -7,7 +7,7 @@ import { getAllItems } from "../../../api/items";
 
 const items = paginationItems;
 
-function Items({ currentItems, selectedBrands, selectedCategories }) {
+function Items({ currentItems, selectedBrands, selectedCategories, filteredProducts }) {
   // Filter items based on selected brands and categories
   // const filteredItems = currentItems.filter((item) => {
   //   const isBrandSelected =
@@ -23,21 +23,28 @@ function Items({ currentItems, selectedBrands, selectedCategories }) {
 
   const [itemss, setItems] = useState([])
 
-  useEffect(()=>{
-    getAllItems(setItems)
-  },[])
+  // useEffect(()=>{
+  //   getAllItems(setItems)
+  // },[])
 
-  console.log(itemss);
+
+  // console.log(itemss);
 
   return (
     <>
-      {itemss.map((item) => (
+      {filteredProducts.map((item) => (
         <div key={item.id} className="w-full">
           <Product
             id={item.id}
-            img={item.img}
+            img={item.photo}
             productName={item.item_name}
             price={item.price}
+            ownerName={item.owner_name}
+            ownerId={item.owner}
+            category={item.category}
+            description={item.description}
+            img2={item.pic1}
+            
           />
         </div>
       ))}
@@ -45,7 +52,7 @@ function Items({ currentItems, selectedBrands, selectedCategories }) {
   );
 }
 
-const Pagination = ({ itemsPerPage }) => {
+const Pagination = ({ itemsPerPage, filteredProducts }) => {
   const [itemOffset, setItemOffset] = useState(0);
   const [itemStart, setItemStart] = useState(1);
 
@@ -74,6 +81,7 @@ const Pagination = ({ itemsPerPage }) => {
           currentItems={currentItems}
           selectedBrands={selectedBrands}
           selectedCategories={selectedCategories}
+          filteredProducts={filteredProducts}
         />{" "}
       </div>
       <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center">

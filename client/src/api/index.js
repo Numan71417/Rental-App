@@ -20,7 +20,7 @@ export function registerUser(userData) {
             // localStorage.setItem('userData', JSON.stringify(userData));
             saveToLocal('userData', userData )
             console.log("registered");
-            window.location.href = '/signin';
+           
             return userData
         } else {
             throw new Error('Failed to register user');
@@ -90,6 +90,11 @@ export function getUserID() {
     } else {
         return null;
     }
+}
+
+export const logout = ()=>{
+    localStorage.clear();
+    window.location.href = '/signin'; 
 }
 
 

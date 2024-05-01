@@ -65,7 +65,7 @@ const getSingleRented = (req, res) => {
 
 
 const addRental = (req, res) => {
-  const {  seller, renter, item_id } = req.body;
+  const {  seller, renter, item_id, expire } = req.body;
 
   // Check if all required fields are provided
   if ( !seller || !renter || !item_id) {
@@ -77,8 +77,8 @@ const addRental = (req, res) => {
   }
 
   const sql =
-    "INSERT INTO rented (seller, renter, item_id) VALUES (?, ?, ?)";
-  const values = [seller, renter, item_id];
+    "INSERT INTO rented (seller, renter, item_id, expire) VALUES (?, ?, ?, ?)";
+  const values = [seller, renter, item_id,expire];
 
   connection.query(sql, values, (err, result) => {
     if (err) {

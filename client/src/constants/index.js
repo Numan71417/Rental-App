@@ -1678,3 +1678,8 @@ export const paginationItems = [
     ],
   },
 ];
+
+
+export const allCategories = [
+  'Books', 'Educational Item', 'Sports', 'Gadgets', 'Musical Instrument', 'Vehicle', 'Electronics', 'Furniture', 'Decoratives', 'House Holds', 
+]
