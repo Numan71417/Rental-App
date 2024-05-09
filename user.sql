@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` int(11) PRIMARY KEY,
   `merchant` tinyint(1) NOT NULL DEFAULT 0,
   `name` varchar(125) NOT NULL,
   `email` varchar(125) NOT NULL,
   `password` varchar(255) NOT NULL,
   `mobile` varchar(12) NOT NULL,
-  `photo` text NOT NULL
+  `photo` text ,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
