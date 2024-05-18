@@ -8,9 +8,9 @@ import { uploadToFirebase } from "../../api/firebaseUpload";
 
 const SignUp = () => {
 
-  if(getAccessToken()){
-    window.location.href = '/'
-  }
+  // if(getAccessToken()){
+  //   window.location.href = '/'
+  // }
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

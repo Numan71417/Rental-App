@@ -20,9 +20,9 @@ const ShopSideNav = ({
   setSizes,
 }) => {
 
-  const sizesArray = [
-    '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45',  '46', '47', '48', '49',
-  ];
+  // const sizesArray = [
+  //   '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45',  '46', '47', '48', '49',
+  // ];
 
   const handleInput = (e) => {
     setPriceRange({
@@ -41,15 +41,15 @@ const ShopSideNav = ({
     });
   };
 
-  const handleSizeChange = (newSize) => {
-    setSizes((prevSizes) => {
-      if (prevSizes.includes(newSize)) {
-        return prevSizes.filter((size) => size !== newSize);
-      } else {
-        return [...prevSizes, newSize];
-      }
-    });
-  };
+  // const handleSizeChange = (newSize) => {
+  //   setSizes((prevSizes) => {
+  //     if (prevSizes.includes(newSize)) {
+  //       return prevSizes.filter((size) => size !== newSize);
+  //     } else {
+  //       return [...prevSizes, newSize];
+  //     }
+  //   });
+  // };
 
 
   const clearFilter = ()=>{
@@ -143,7 +143,7 @@ const ShopSideNav = ({
 
         <p className="border border-white w-full mb-3 mt-3"></p>
 
-        <div className="mb-10">
+        {/* <div className="mb-10">
           <h2 className="text-lg font-bold text-slate-300 mb-3">Size</h2>
 
           <div className="flex flex-col">
@@ -161,7 +161,8 @@ const ShopSideNav = ({
               </label>
             ))}
           </div>
-        </div>
+        </div> */}
+
       </div>
 
       <div

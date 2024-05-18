@@ -58,6 +58,7 @@ export function loginUser(email, password) {
         // Save the token to localStorage
         localStorage.setItem('accessToken', data.token);
         localStorage.setItem('userId', data.userId);
+        saveToLocal('userData', data.userData);
         console.log(data.token);
         // Redirect to dashboard or home page after successful login
         window.location.href = '/';

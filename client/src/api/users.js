@@ -8,6 +8,7 @@ const userId = getUserID();
 export const getUser = async () => {
     try {
         const id = getUserID();
+        console.log("id -- ",id);
         const accessToken = getAccessToken();
         if (!accessToken) {
             throw new Error('Access token not found');

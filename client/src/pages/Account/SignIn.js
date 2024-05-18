@@ -6,9 +6,9 @@ import { getAccessToken, loginUser } from "../../api";
 
 const SignIn = () => {
 
-  if(getAccessToken()){
-    window.location.href = '/'
-  }
+  // if(getAccessToken()){
+  //   window.location.href = '/'
+  // }
 
 
   // ============= Initial State Start here =============

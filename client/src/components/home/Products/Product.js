@@ -110,7 +110,7 @@ const Product = ({id,img, productName, price,ownerName, ownerId, category, descr
           <h2 className="text-lg text-primeColor font-bold">
             {productName}
           </h2>
-          <p className="text-[#767676] text-[14px]">$ {price}</p>
+          <p className="text-slate-700 text-[14px]">₹ {price}</p>
         </div>
 
         <div className=" flex gap-2 justify-between">
