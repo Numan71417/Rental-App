@@ -3,15 +3,19 @@ import { getUser, becomeMerchant } from "../../api/users";
 import { saveToLocal } from "../../api/savetoLocal";
 import { Link } from "react-router-dom";
 import { getUserID, logout } from "../../api";
-import { myRentals } from "../../api/rental";
+import { deleteMyRental, myRentals } from "../../api/rental";
 import { toast } from "react-toastify";
 import CountdownTimer from "./CountDown";
+import { daysFromToday } from "../../constants/daysFromToday";
 
 const userID = getUserID();
 
 const Profilepage = ({ onUpdate, onDelete }) => {
   const [user, setUser] = useState({});
   const [rentals, setRenatls] = useState([]);
+  const [expires, setExpires] = useState('');
+  const [expId, setExpId] = useState('');
+
   // const [isEditing, setIsEditing] = useState(false);
   // const [editedUser, setEditedUser] = useState("");
 
@@ -25,6 +29,31 @@ const Profilepage = ({ onUpdate, onDelete }) => {
   useEffect(() => {
     myRentals(setRenatls);
   }, []);
+
+
+  function deleteExpiredItems(rental) {
+    const currentTime = new Date().getTime();
+
+    return rental.filter(item => {
+        if (item.expire > currentTime) {
+            return true; 
+        } else {
+
+            console.log(`Item with id ${item.id} has expired and is deleted.`);
+            return false; 
+        }
+    });
+  }
+
+  function startExpirationCheck(interval) {
+    setInterval(() => {
+        setRenatls(deleteExpiredItems(rentals));
+    }, interval);
+  }
+
+  startExpirationCheck(30000);
+
+
 
   console.log("merchant: ", user);
   console.log("our renatls", rentals);
@@ -135,6 +164,7 @@ const Profilepage = ({ onUpdate, onDelete }) => {
                 <th className="font-bold border bg-slate-700 text-white">Paid</th>
               </tr>
             </thead>
+         
             <tbody>
               {rentals?.map((r) => (
                 <tr key={r.id}>
@@ -148,11 +178,22 @@ const Profilepage = ({ onUpdate, onDelete }) => {
                     <CountdownTimer dateTime={r.expire}/>
 
                   </td>
-                  <td className="border ">{"₹ "+r.item_price* new Date(r.expire).getDate()} </td>
+                  <td className="border ">{"₹ "+r.item_price* daysFromToday(r.expire)} </td>
                 </tr>
               ))}
             </tbody>
+            
+            
           </table>
+
+           { rentals.length === 0 &&
+            <div className="flex flex-col justify-center items-center gap-2 border-slate-900 border w-full px-8 py-5">
+                <p className="font-bold text-xl">Nothing Rented yet..</p>
+                <button className="p-2 bg-slate-800 text-white font-bold rounded w-36">
+                  <Link to={'/shop'}>Rent Now</Link>
+                </button>
+              </div>
+            }
         </div>
       </div>
       </>

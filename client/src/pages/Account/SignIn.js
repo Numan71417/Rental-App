@@ -11,11 +11,10 @@ const SignIn = () => {
   // }
 
 
-  // ============= Initial State Start here =============
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // ============= Initial State End here ===============
-  // ============= Error Msg Start here =================
+
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
 

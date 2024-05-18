@@ -81,3 +81,31 @@ export const myRentals = async (setRentals) => {
     }
 };
 
+export const deleteMyRental = async (id) => {
+    try {
+        if (!accessToken) {
+            throw new Error('Access token not found');
+        }
+
+        const response = await fetch(api + '/rentals/delete/'+id, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } else {
+            console.log('Error:', response.statusText);
+            throw new Error('Failed to fetch items');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        throw new Error('Failed to fetch items');
+    }
+};
+
