@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { BiSolidBank } from "react-icons/bi";
+import { CiBank } from "react-icons/ci";
 import { FaRegCreditCard } from "react-icons/fa";
+import { GrPaypal } from "react-icons/gr";
 
-const PaymentComponent = () => {
+const PayMethod = () => {
   const [selectedMethod, setSelectedMethod] = useState('');
   const [paymentDetails, setPaymentDetails] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
@@ -48,25 +49,28 @@ const PaymentComponent = () => {
           className="p-2 bg-blue-500 text-white rounded"
           onClick={() => handleMethodChange('internet_banking')}
         >
-          Internet Banking <span><BiSolidBank /></span>
+          Internet Banking
+           {/* <span> <CiBank />  </span> */}
         </button>
         <button
           className="p-2 bg-green-500 text-white rounded"
           onClick={() => handleMethodChange('debit_credit_card')}
         >
-          Debit/Credit Card <span><FaRegCreditCard /></span>
+          Debit/Credit Card 
+          {/* <span><FaRegCreditCard /></span> */}
         </button>
         <button
           className="p-2 bg-yellow-500 text-white rounded"
           onClick={() => handleMethodChange('upi')}
         >
-          UPI Payment
+          UPI Payment <span> <img src="https://cdn.iconscout.com/icon/free/png-256/free-upi-2085056-1747946.png?f=webp" width={'70px'} alt="" /> </span>
         </button>
         <button
           className="p-2 bg-indigo-500 text-white rounded"
           onClick={() => handleMethodChange('paypal')}
         >
           PayPal
+          {/* <span><GrPaypal /></span> */}
         </button>
       </div>
      
@@ -161,4 +165,4 @@ const PaymentComponent = () => {
   );
 };
 
-export default PaymentComponent;
+export default PayMethod;
