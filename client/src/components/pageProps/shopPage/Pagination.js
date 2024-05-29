@@ -4,50 +4,35 @@ import Product from "../../home/Products/Product";
 import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
 import { getAllItems } from "../../../api/items";
+const notfound = 'https://cdni.iconscout.com/illustration/premium/thumb/not-found-7621869-6167023.png?f=webp'
 
 const items = paginationItems;
 
-function Items({ currentItems, selectedBrands, selectedCategories, filteredProducts }) {
-  // Filter items based on selected brands and categories
-  // const filteredItems = currentItems.filter((item) => {
-  //   const isBrandSelected =
-  //     selectedBrands.length === 0 ||
-  //     selectedBrands.some((brand) => brand.title === item.brand);
-
-  //   const isCategorySelected =
-  //     selectedCategories.length === 0 ||
-  //     selectedCategories.some((category) => category.title === item.cat);
-
-  //   return isBrandSelected && isCategorySelected;
-  // });
-
-  const [itemss, setItems] = useState([])
-
-  // useEffect(()=>{
-  //   getAllItems(setItems)
-  // },[])
-
-
-  // console.log(itemss);
-
+function Items({
+  currentItems,
+  selectedBrands,
+  selectedCategories,
+  filteredProducts,
+}) {
   return (
     <>
-      {filteredProducts.map((item) => (
-        <div key={item.id} className="w-full">
-          <Product
-            id={item.id}
-            img={item.photo}
-            productName={item.item_name}
-            price={item.price}
-            ownerName={item.owner_name}
-            ownerId={item.owner}
-            category={item.category}
-            description={item.description}
-            img2={item.pic1}
-            
-          />
-        </div>
-      ))}
+      {      
+          filteredProducts.map((item) => (
+            <div key={item.id} className="w-full">
+              <Product
+                id={item.id}
+                img={item.photo}
+                productName={item.item_name}
+                price={item.price}
+                ownerName={item.owner_name}
+                ownerId={item.owner}
+                category={item.category}
+                description={item.description}
+                img2={item.pic1}
+              />
+            </div>
+          ))   
+      }
     </>
   );
 }
@@ -82,8 +67,19 @@ const Pagination = ({ itemsPerPage, filteredProducts }) => {
           selectedBrands={selectedBrands}
           selectedCategories={selectedCategories}
           filteredProducts={filteredProducts}
-        />{" "}
+        />
       </div>
+
+      {
+        filteredProducts.length===0 &&
+        <div className="flex w-full flex-col justify-center items-center">
+            <img src={notfound} className="w-1/2" alt="notfound" />
+            <h1 className="text-xl font-bold ">Looks Like product is unavailable</h1>
+            <h1 className="text-lg font-semibold">Please clear filter</h1>
+        </div>
+      }
+
+    {filteredProducts.length!=0 &&
       <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center">
         <ReactPaginate
           nextLabel=""
@@ -102,8 +98,10 @@ const Pagination = ({ itemsPerPage, filteredProducts }) => {
           Products from {itemStart} to {Math.min(endOffset, items.length)} of{" "}
           {items.length}
         </p>
-        <button onClick={() => console.log(selectedBrands)}> test</button>
       </div>
+    }
+
+
     </div>
   );
 };

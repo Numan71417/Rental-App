@@ -88,14 +88,14 @@ const Profilepage = ({ onUpdate, onDelete }) => {
 
           {user?.merchant === 1 ? (
             <Link to={"/additem"}>
-              <button className=" underline cursor-pointer">
+              <li className=" underline cursor-pointer">
                 Rent your Product
-              </button>
+              </li>
             </Link>
           ) : (
-            <button className={"underline"} onClick={makeMerchant}>
+            <li className={"underline cursor-pointer"} onClick={makeMerchant}>
               Become a Merchant
-            </button>
+            </li>
           )}
 
           <li
@@ -171,8 +171,8 @@ const Profilepage = ({ onUpdate, onDelete }) => {
                   <td className="border flex justify-center items-end p-3">
                     <img src={r.item_img} alt={r.item_name} width={"150px"} />
                   </td>
-                  <td className="border ">{r.item_name}</td>
-                  <td className="border ">
+                  <td className="border text-center">{r.item_name}</td>
+                  <td className="border text-center">
                     {getFormattedDate(r.expire)}
                     <br />
                     <CountdownTimer dateTime={r.expire}/>

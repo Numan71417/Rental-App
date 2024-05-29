@@ -16,13 +16,8 @@ const ShopSideNav = ({
   setPriceRange,
   categories,
   setCategories,
-  sizes,
-  setSizes,
-}) => {
 
-  // const sizesArray = [
-  //   '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45',  '46', '47', '48', '49',
-  // ];
+}) => {
 
   const handleInput = (e) => {
     setPriceRange({
@@ -41,21 +36,12 @@ const ShopSideNav = ({
     });
   };
 
-  // const handleSizeChange = (newSize) => {
-  //   setSizes((prevSizes) => {
-  //     if (prevSizes.includes(newSize)) {
-  //       return prevSizes.filter((size) => size !== newSize);
-  //     } else {
-  //       return [...prevSizes, newSize];
-  //     }
-  //   });
-  // };
+ 
 
 
   const clearFilter = ()=>{
     setCategories([]);
-    setPriceRange({min:300,max:5000});
-    setSizes([]);
+    setPriceRange({min:0,max:5000});
   }
   
   //logic for responsive menu icon
@@ -88,10 +74,10 @@ const ShopSideNav = ({
 
         <div>
           <h2 className="text-lg font-bold text-slate-300 mb-4">
-            Price Range <span> (in $) </span>{" "}
+            Price Range <span> (in ₹) </span>{" "}
           </h2>
           <MultiRangeSlider
-            min={100}
+            min={1}
             max={1000}
             step={10}
             ruler={false}
@@ -112,8 +98,8 @@ const ShopSideNav = ({
 
           <p className="block">
             {priceRange.min === priceRange.max
-              ? "$" + priceRange.min
-              : priceRange.min + " - " + priceRange.max + " $"}
+              ? "₹" + priceRange.min
+              : priceRange.min + " - " + priceRange.max + " ₹"}
           </p>
         </div>
 

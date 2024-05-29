@@ -66,9 +66,13 @@ const ItemCard = ({ item, returnDate, setReturnDate }) => {
 
         <div className="flex w-1/5 items-center text-md font-semibold">
           No of days: <br />
+         {returnDate?
           <p className=" font-normal p-2">
             {"" + daysFromToday(returnDate) }
             </p>
+          :
+          <p className="font-normal p-2">Select date</p>
+          }
         </div>
 
         <div className="flex w-1/5 items-center text-lg font-semibold">

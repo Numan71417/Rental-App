@@ -15,25 +15,19 @@ const [products, setProducts] = useState([])
 
   useEffect(()=>{
     getAllItems(setProducts);
+    console.log("products: ",products);
   },[])
+  
 
-
-  const [priceRange, setPriceRange] = useState({
-    min:100,
-    max:1000
-  });
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 3000 });
   const [categories, setCategories] = useState([]);
-  const [sizes, setSizes] = useState([]);
 
   const filteredProducts = products.filter((product) => {
     const categoryMatch = categories.length === 0 || categories.includes(product.category);
-    const sizeMatch = sizes.length === 0 || product.size.some((size) => sizes.includes(size));
     const priceMatch = product.price >= priceRange.min && product.price <= priceRange.max;
-  
-    return categoryMatch && sizeMatch && priceMatch;
+    // console.log(`Product: ${product.item_name}, Category Match: ${categoryMatch}, Price Match: ${priceMatch}`);
+    return categoryMatch && priceMatch;
   });
-
-  
 
 
 
@@ -48,8 +42,6 @@ const [products, setProducts] = useState([])
            setPriceRange={setPriceRange}
            categories={categories}
            setCategories={setCategories}
-           sizes={sizes}
-           setSizes={setSizes}
           />
         </div>
         <div className="w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10">

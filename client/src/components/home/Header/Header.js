@@ -37,8 +37,6 @@ const Header = () => {
         <Flex className="flex items-center justify-between h-full">
           <Link to="/">
             <div>
-              {/* <Image className="w-32 object-cover" imgSrc={logo} />
-               */}
               <div className="text-2xl text-slate-900 font-bold">
                 A-Z Rentals
               </div>
@@ -64,16 +62,25 @@ const Header = () => {
                     </NavLink>
                   ))}
 
+                  {user.merchant===1 &&
+                    <NavLink
+                      className="flex font-normal hover:font-bold w-32   h-6 justify-center items-center px-3 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+                      to={'/additem'}
+                    >
+                      <li>Add Product</li>
+                  </NavLink>}
+
                   {user ? (
-                    <Link to={'/profile'}>
+                    <Link to={'/profile'} className="flex justify-center items-center flex-col">
                       <img
                         src={user.photo}
-                        className="w-14 rounded-full "
+                        className="w-10 rounded-xl "
                         alt="profile"
                       />
-                      <span className="flex justify-center items-center capitalize">
-
-                      {user.name}
+                      <span className="flex justify-center items-center capitalize text-md font-medium">
+                          {
+                            user.name.substring(0,8)
+                          }
                       </span>
                     </Link>
                   ) : (

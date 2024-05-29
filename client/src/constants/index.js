@@ -67,11 +67,7 @@ export const navBarList = [
     title: "Shop",
     link: "/shop",
   },
-  {
-    _id: 1005,
-    title: "extra",
-    link: "/journal",
-  },
+  
 ];
 // =================== NavBarList End here ======================
 // =================== Special Offer data Start here ============
