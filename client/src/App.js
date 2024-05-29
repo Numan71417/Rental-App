@@ -30,11 +30,9 @@ import { getAccessToken } from "./api";
 import AddItems from "./pages/AddProducts/AddItems";
 
 const Layout = () => {
-
-  if(getAccessToken() === null){
-    window.location.href = '/signin'
+  if (getAccessToken() === null) {
+    window.location.href = "/signin";
   }
-
 
   return (
     <div>
@@ -74,8 +72,9 @@ const router = createBrowserRouter(
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
+
+        <Route path="/payment/:id" element={<Payment />}></Route>
         
-        <Route path="/paymentgateway" element={<Payment />}></Route>
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>

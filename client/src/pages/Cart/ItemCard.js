@@ -9,6 +9,7 @@ import {
 import { getUserID } from "../../api";
 import { rentProduct } from "../../api/rental";
 import { daysFromToday } from "../../constants/daysFromToday";
+import { saveToLocal } from "../../api/savetoLocal";
 
 const userId = getUserID();
 
@@ -31,10 +32,12 @@ const ItemCard = ({ item, returnDate, setReturnDate }) => {
     dispatch(deleteItem(item._id))
     console.log("rental data: ",rentalData);
     if(await rentProduct(rentalData)){
-      window.location.href = '/profile'
+      saveToLocal('rented', {rentalData, item})
+      window.location.href = `/payment/${item._id}`
     }
 
   }
+
   const getFormatDate = (date)=>{
     if(daysFromToday(date) === -1){
       alert("Enter valid date")
