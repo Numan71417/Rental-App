@@ -1,7 +1,7 @@
 import { saveToLocal } from "./savetoLocal";
 
-export const api = "http://localhost:5000/api/v1"
-// export const api = "https://rental-app-api.vercel.app/api/v1"
+//export const api = "http://localhost:5000/api/v1"
+export const api = "https://rental-app-api.vercel.app/api/v1"
 
 
 
