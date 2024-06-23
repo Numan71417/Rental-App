@@ -4,9 +4,9 @@ const connection = require("../dbConnec");
 
 const getItems = (req, res) => {
     const sql = `SELECT items.* ,
-                    owner.name AS owner_name
-                    FROM items
-                INNER JOIN user AS owner ON items.owner = owner.id
+                branch.location AS branch_name
+                FROM items
+                INNER JOIN branches AS branch ON items.branch = branch.id
                    
      `;
     connection.query(sql, (err, result) => {
@@ -21,9 +21,9 @@ const getItems = (req, res) => {
 const getItem = (req, res) => {
     const {id} = req.params;
     const sql = `SELECT items.* ,
-                    owner.name AS owner_name
+                    branch.name AS branch_name
                     FROM items
-                INNER JOIN user AS owner ON items.owner = owner.id
+                INNER JOIN branches AS branch ON items.branch = branch.id
                 WHERE items.id = ?
                    
      `;
@@ -37,10 +37,10 @@ const getItem = (req, res) => {
 };
 
 const addItems = (req, res) => {
-    const { item_name, category, price, description, ownerId, photo, pic1 } = req.body;
+    const { item_name, branch, category, price, description, photo, pic1, quantity } = req.body;
 
     // Check if all required fields are provided
-    if (!item_name || !category || !price || !description || !ownerId) {
+    if (!item_name || !category || !price || !description || !quantity || !branch) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
@@ -50,8 +50,8 @@ const addItems = (req, res) => {
     }
 
     // Sanitize inputs to prevent SQL injection
-    const sql = 'INSERT INTO items (item_name, category, price, description, owner, photo, pic1) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const values = [item_name, category, price, description, ownerId, photo, pic1];
+    const sql = 'INSERT INTO items (item_name, branch, category, price, description, photo, pic1, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const values = [item_name, branch, category, price, description, photo, pic1, quantity];
 
     connection.query(sql, values, (err, result) => {
         if (err) {
@@ -91,7 +91,7 @@ const deleteItem = (req, res) => {
 const editItems = (req, res) => {
     const { id } = req.params;
     const { item_name, category, price, description } = req.body;
-    const values = [item_name, category, price, description, id];
+    const values = [item_name, category, price, description];
 
     if (!id) {
         return res.status(400).json({ error: 'Missing id parameter' });

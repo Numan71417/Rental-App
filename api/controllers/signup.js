@@ -7,14 +7,14 @@ const JWT_SECRET = process.env.JWT;
 
 const signup = async (req, res) => {
     try {
-        const { name, email, password, mobile, photo } = req.body;
+        const { name, email, password, mobile, photo,location,address } = req.body;
 
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10); // Using 10 salt rounds
 
-        console.log(name, email, password, mobile, photo);
+        console.log(name, email, password, mobile, photo, location, address);
 
-        connection.query('INSERT INTO user (name, email, password, mobile, photo) VALUES (?, ?, ?, ?, ?)', [name, email, hashedPassword, mobile, photo], (err, result) => {
+        connection.query('INSERT INTO user (name, email, password, mobile, photo, location, address) VALUES (?, ?, ?, ?, ?, ?, ?)', [name, email, hashedPassword, mobile, photo, location, address], (err, result) => {
             if (err) {
                 console.error('Error registering user:', err);
                 return res.status(500).json({ error: 'Failed to register user' });

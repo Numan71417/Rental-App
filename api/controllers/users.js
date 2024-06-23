@@ -56,7 +56,7 @@ const deleteUser = (req, res) => {
 
 const editUser = (req, res) => {
     const { id } = req.params;
-    const { name, email, mobile, photo } = req.body;
+    const { name, email, mobile, photo, location, address } = req.body;
 
     // Check if id is provided
     if (!id) {
@@ -64,9 +64,9 @@ const editUser = (req, res) => {
     }
 
 
-    const sql = 'UPDATE user SET name = ?, email = ?, mobile = ?, photo = ? WHERE id = ?';
+    const sql = 'UPDATE user SET name = ?, email = ?, mobile = ?, photo = ?, location = ?, address = ? WHERE id = ?';
 
-    connection.query(sql, [name, email, mobile, photo, id], (err, result) => {
+    connection.query(sql, [name, email, mobile, photo, location, address, id], (err, result) => {
         if (err) {
             console.error('Error updating user:', err);
             return res.status(500).json({ error: 'Failed to update user details' });
@@ -81,37 +81,11 @@ const editUser = (req, res) => {
 };
 
 
-const merchantAccount = (req, res) => {
-    const { id } = req.params;
-    var { merchant } = req.body;
-
-    if (!id) {
-        return res.status(400).json({ error: 'Missing id parameter' });
-    }
-
-
-    const sql = 'UPDATE user SET merchant = ? WHERE id = ?';
-
-    connection.query(sql, [merchant, id], (err, result) => {
-        if (err) {
-            console.error('Error updating to merchant:', err);
-            return res.status(500).json({ error: 'Failed to update merchant' });
-        }
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        res.status(200).json({ message: 'User merchant details updated successfully' });
-    });
-};
-
 
 
 module.exports = {
     getUsers,
     getUser,
     deleteUser,
-    editUser,
-    merchantAccount
+    editUser
 };

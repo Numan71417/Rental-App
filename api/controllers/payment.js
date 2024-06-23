@@ -5,7 +5,7 @@ const connection = require("../dbConnec");
 const getRented = (req, res) => {
 
   const sql = `
-    SELECT rented.*,       
+    SELECT payment.*,       
            items.item_name AS item_name,
            items.price AS item_price,
            items.category AS item_category,
@@ -13,9 +13,13 @@ const getRented = (req, res) => {
            items.photo AS item_img,
            items.quantity AS quantity,
            items.branch AS branch,
-           items.pic1 AS item_otherimg
+           items.pic1 AS item_otherimg,
+           user.name AS user_name,
+           user.address AS user_address,
+           user.mobile AS user_mobile
     FROM rented 
-    INNER JOIN items ON rented.item_id = items.id
+    INNER JOIN items ON payment.item_id = items.id
+    INNER JOIN user ON payment.renter = user.id
     
 `;
 
@@ -33,7 +37,7 @@ const getSingleRented = (req, res) => {
   const { id } = req.params;
 
   const sql = `
-      SELECT rented.*,       
+      SELECT payment.*,       
            items.item_name AS item_name,
            items.price AS item_price,
            items.category AS item_category,
@@ -41,9 +45,14 @@ const getSingleRented = (req, res) => {
            items.photo AS item_img,
            items.quantity AS quantity,
            items.branch AS branch,
-           items.pic1 AS item_otherimg
-      FROM rented 
-      INNER JOIN items ON rented.item_id = items.id
+           items.pic1 AS item_otherimg,
+           user.name AS user_name,
+           user.address AS user_address,
+           user.mobile AS user_mobile
+    FROM rented 
+    INNER JOIN items ON payment.item_id = items.id
+    INNER JOIN user ON payment.renter = user.id
+    
       WHERE rented.id = ?
   `;
 
