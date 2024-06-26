@@ -12,15 +12,14 @@ import { toast } from "react-toastify";
 import { getAllItems } from "../../../api/items";
 import { getUserID } from "../../../api";
 
-const Product = ({id,img, productName, price,ownerName, ownerId, category, description,img2}) => {
+const Product = ({id,img, productName, price,branch_name, category, description,img2}) => {
   
   const productItem = {
     id,
     photo:img,
     item_name:productName,
     price,
-    owner_name:ownerName,
-    owner:ownerId,
+    branch_name,
     category, 
     description,
     pic2:img2
@@ -73,7 +72,7 @@ const Product = ({id,img, productName, price,ownerName, ownerId, category, descr
         </div>
 
         <div className=" flex gap-2 justify-between mt-5">
-          <div className="">Owner: <p className="font-bold">{ownerName}</p> </div>
+          {/* <div className="">Location: <p className="font-bold">{branch_name}</p> </div> */}
           <div className="">Category<p className="font-bold  border bg-slate-500 rounded-md p-1 px-2 text-white">{category}</p></div>
         </div>
 
@@ -82,9 +81,8 @@ const Product = ({id,img, productName, price,ownerName, ownerId, category, descr
            {img2 && <img src={img2} className="rounded" alt={productName}  width={'40px'} height={'50px'}/>}
         </div>
 
-       {ownerId == getUserID() ?
-       <div className="flex text-xl font-bold">You are the owner , You cannot rent this</div>
-       :
+    
+       
         <div className="flex justify-between ">
           <button className="bg-slate-300 p-2 underline " onClick={handleProductDetails}>More Details</button>
           <button className="bg-slate-900 text-white p-2 rounded-sm" 
@@ -99,14 +97,13 @@ const Product = ({id,img, productName, price,ownerName, ownerId, category, descr
                     price: price,
                     category,
                     description,
-                    ownerName,
-                    ownerId
+                    
                     
                   }))}
           >
           Add To Cart
           </button>
-        </div>}
+        </div>
       </div>
     </div>
   );

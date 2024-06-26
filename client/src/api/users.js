@@ -36,6 +36,31 @@ export const getUser = async () => {
         throw new Error('Failed to fetch users');
     }
 };
+export const getAllUsers = async (setState) => {
+    try {
+
+        const response = await fetch(api + '/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("all user data ",data);
+            setState(data);
+
+            
+        } else {
+            console.log('Error:', response.statusText);
+            throw new Error('Failed to fetch users');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        throw new Error('Failed to fetch users');
+    }
+};
 
 export const updateUser = async ( newData) => {
     try {
@@ -98,15 +123,5 @@ export const becomeMerchant = async (newData) => {
     }
 };
 
-// export function getUserData() {
-//     const userDataJSON = localStorage.getItem('userData');
-//     var obj ={};
-//     if (userDataJSON) {
-//         obj = JSON.parse(userDataJSON);
-//         return obj;
-//     } else {
-//         return {}; 
-//     }
-// }
 
 

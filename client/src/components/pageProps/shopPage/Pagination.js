@@ -24,8 +24,7 @@ function Items({
                 img={item.photo}
                 productName={item.item_name}
                 price={item.price}
-                ownerName={item.owner_name}
-                ownerId={item.owner}
+                branch={item.branch_name}
                 category={item.category}
                 description={item.description}
                 img2={item.pic1}

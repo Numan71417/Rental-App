@@ -28,7 +28,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Profilepage from "./pages/profile/Profilepage";
 import { getAccessToken } from "./api";
 import AddItems from "./pages/AddProducts/AddItems";
+import Invoice from "./pages/payment/Invoice";
+import Dashboard from "./pages/Dashboard/dashboard";
 
+const userData = JSON.parse(localStorage.getItem('userData'))
 const Layout = () => {
   if (getAccessToken() === null) {
     window.location.href = "/signin";
@@ -66,7 +69,7 @@ const router = createBrowserRouter(
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/profile" element={<Profilepage />}></Route>
-        <Route path="/additem" element={<AddItems />}></Route>
+
         <Route path="/journal" element={<Journal />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/category/:category" element={<Offer />}></Route>
@@ -74,8 +77,19 @@ const router = createBrowserRouter(
         <Route path="/cart" element={<Cart />}></Route>
 
         <Route path="/payment/:id" element={<Payment />}></Route>
-        
+        <Route path="/invoice" element={<Invoice />}></Route>
+
+
       </Route>
+      {
+        userData?.isAdmin &&
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+      }
+      {
+        userData?.isAdmin &&
+
+        <Route path="/additem" element={<AddItems />}></Route>
+      }
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
     </Route>

@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { api, getAccessToken, getUserID } from ".";
+import { saveToLocal } from "./savetoLocal";
 
 const accessToken = getAccessToken();
 const userID = getUserID();
@@ -31,7 +32,7 @@ export const rentProduct = async(rentData) =>{
 
 
 
-export const getAllRentals = async () => {
+export const getAllRentals = async (setState) => {
     try {
         if (!accessToken) {
             throw new Error('Access token not found');
@@ -48,6 +49,36 @@ export const getAllRentals = async () => {
         if (response.ok) {
             const data = await response.json();
             // console.log("all Rentals", data);
+            setState(data)
+            
+        } else {
+            console.log('Error:', response.statusText);
+            throw new Error('Failed to fetch items');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        throw new Error('Failed to fetch items');
+    }
+};
+
+export const getPaymentInfo = async (userId) => {
+    try {
+        if (!accessToken) {
+            throw new Error('Access token not found');
+        }
+
+        const response = await fetch(api + '/rentals/payment/'+userId, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            // console.log("all Rentals", data);
+            saveToLocal('paymentInfo',{data})
             return data;
         } else {
             console.log('Error:', response.statusText);
@@ -80,6 +111,8 @@ export const myRentals = async (setRentals) => {
         toast.error(error.message); // Assuming toast is available in the scope
     }
 };
+
+
 
 export const deleteMyRental = async (id) => {
     try {

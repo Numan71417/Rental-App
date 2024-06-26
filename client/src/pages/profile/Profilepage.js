@@ -86,18 +86,6 @@ const Profilepage = ({ onUpdate, onDelete }) => {
         <ul className="p-2 flex flex-col gap-3">
           <li>Home</li>
 
-          {user?.merchant === 1 ? (
-            <Link to={"/additem"}>
-              <li className=" underline cursor-pointer">
-                Rent your Product
-              </li>
-            </Link>
-          ) : (
-            <li className={"underline cursor-pointer"} onClick={makeMerchant}>
-              Become a Merchant
-            </li>
-          )}
-
           <li
             className=" underline text-red-500 cursor-pointer"
             onClick={logout}

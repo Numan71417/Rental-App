@@ -7,7 +7,7 @@ import {
   increaseQuantity,
 } from "../../redux/orebiSlice";
 import { getUserID } from "../../api";
-import { rentProduct } from "../../api/rental";
+import { getPaymentInfo, rentProduct } from "../../api/rental";
 import { daysFromToday } from "../../constants/daysFromToday";
 import { saveToLocal } from "../../api/savetoLocal";
 
@@ -16,7 +16,7 @@ const userId = getUserID();
 const ItemCard = ({ item, returnDate, setReturnDate }) => {
   const dispatch = useDispatch();
   // const [finalPrice, setFinalPrice] = useState("")
-
+  const [itemInfo, setItemInfo] = useState("")
   const handleRentProduct = async()=>{
     if(!returnDate){
       alert("Enter date of return");
@@ -24,12 +24,14 @@ const ItemCard = ({ item, returnDate, setReturnDate }) => {
     }
     console.log(returnDate);
     const rentalData = {
-      seller:item.ownerId,
       renter:userId,
+      item_id:item._id,
       expire:returnDate,
-      item_id:item._id
+      price:item.price * daysFromToday(returnDate),
+      days:daysFromToday(returnDate)
     }
     dispatch(deleteItem(item._id))
+    getPaymentInfo(userId)
     console.log("rental data: ",rentalData);
     if(await rentProduct(rentalData)){
       saveToLocal('rented', {rentalData, item})
