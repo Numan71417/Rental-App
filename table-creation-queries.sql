@@ -1,6 +1,7 @@
 --  user 
 CREATE TABLE user(
     id INT AUTO_INCREMENT PRIMARY KEY,
+    isAdmin tinyint(1) DEFAULT 0,
     name VARCHAR(125) NOT NULL,
     email VARCHAR(125) NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -32,6 +33,7 @@ CREATE TABLE IF NOT EXISTS rented (
       expire DATETIME DEFAULT NULL,
       item_id INT DEFAULT NULL,
       price BIGINT NOT NULL,
+      days INT,
       FOREIGN KEY (renter) REFERENCES user(id),
       FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
 );
