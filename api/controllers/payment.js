@@ -2,10 +2,10 @@
 
 const connection = require("../dbConnec");
 
-const getRented = (req, res) => {
+const getPayment = (req, res) => {
 
   const sql = `
-    SELECT payment.*,       
+    SELECT payments.*,       
            items.item_name AS item_name,
            items.price AS item_price,
            items.category AS item_category,
@@ -18,8 +18,8 @@ const getRented = (req, res) => {
            user.address AS user_address,
            user.mobile AS user_mobile
     FROM rented 
-    INNER JOIN items ON payment.item_id = items.id
-    INNER JOIN user ON payment.renter = user.id
+    INNER JOIN items ON payments.item_id = items.id
+    INNER JOIN user ON payments.renter = user.id
     
 `;
 
@@ -33,11 +33,11 @@ const getRented = (req, res) => {
   });
 };
 
-const getSingleRented = (req, res) => {
+const getSinglePayment = (req, res) => {
   const { id } = req.params;
 
   const sql = `
-      SELECT payment.*,       
+      SELECT payments.*,       
            items.item_name AS item_name,
            items.price AS item_price,
            items.category AS item_category,
@@ -48,12 +48,15 @@ const getSingleRented = (req, res) => {
            items.pic1 AS item_otherimg,
            user.name AS user_name,
            user.address AS user_address,
-           user.mobile AS user_mobile
-    FROM rented 
-    INNER JOIN items ON payment.item_id = items.id
-    INNER JOIN user ON payment.renter = user.id
+           user.mobile AS user_mobile,
+           rented.days AS item_days
+    FROM payments 
+    INNER JOIN items ON payments.item_id = items.id
+    INNER JOIN user ON payments.renter = user.id
+    INNER JOIN rented ON payments.item_id = rented.item_id
     
-      WHERE rented.id = ?
+    WHERE payments.renter = ?
+    WHERE payments.item_id = items.id
   `;
 
   connection.query(sql, [id], (err, result) => {
@@ -69,61 +72,31 @@ const getSingleRented = (req, res) => {
 };
 
 
-const addRental = (req, res) => {
-  const { renter, item_id, expire, price } = req.body;
+const addPayment = (val) => {
+  const { renter, item_id, amount } = val;
 
   // Check if all required fields are provided
-  if ( !price || !renter || !item_id || !expire) {
-    return res.status(400).json({ error: "Missing required fields" });
+  if ( !amount || !renter || !item_id ) {
+    return { error: "Missing required fields" };
   }
 
- 
-
   const sql =
-    "INSERT INTO rented (renter, item_id, expire, price) VALUES (?, ?, ?, ?)";
-  const values = [renter, item_id, expire, price];
+    "INSERT INTO payments (renter, item_id, amount) VALUES (?, ?, ?)";
+  const values = [renter, item_id, amount];
 
   connection.query(sql, values, (err, result) => {
     if (err) {
       console.error("Error adding item:", err);
-      return res
-        .status(500)
-        .json({ error: "Failed to add item to the database" });
+      return { error: "Failed to add item to the database" };
     }
-    res.status(200).json({ result, msg: "Added item to DB successfully" });
+    return { result, msg: "Payment Successful" };
   });
 };
 
-const deleteRental = (req, res) => {
-  const { rental_id } = req.params;
 
-  if (!rental_id) {
-    return res.status(400).json({ error: "Missing rentalId parameter" });
-  }
-
-  const sql = "DELETE FROM rented WHERE id = ?";
-  const values = [rental_id];
-
-  connection.query(sql, values, (err, result) => {
-    if (err) {
-      console.error("Error deleting rental:", err);
-      return res
-        .status(500)
-        .json({ error: "Failed to delete rental from the database" });
-    }
-
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "Rental not found" });
-    }
-
-    res.status(200).json({ msg: "Rental deleted successfully" });
-  });
-};
 
 module.exports = {
-  getRented,
-  addRental,
-  deleteRental,
-  getSingleRented
+  getPayment,
+  addPayment,
+  getSinglePayment
 };

@@ -1,6 +1,7 @@
 // controllers/rented.js
 
 const connection = require("../dbConnec");
+const {addPayment} = require("./payment")
 
 const getRented = (req, res) => {
 
@@ -13,9 +14,11 @@ const getRented = (req, res) => {
            items.photo AS item_img,
            items.quantity AS quantity,
            items.branch AS branch,
-           items.pic1 AS item_otherimg
+           items.pic1 AS item_otherimg,
+           user.name As renter_name
     FROM rented 
     INNER JOIN items ON rented.item_id = items.id
+    INNER JOIN user ON rented.renter = user.id
     
 `;
 
@@ -61,18 +64,20 @@ const getSingleRented = (req, res) => {
 
 
 const addRental = (req, res) => {
-  const { renter, item_id, expire, price } = req.body;
+  const { renter, item_id, expire, price, days } = req.body;
 
   // Check if all required fields are provided
   if ( !price || !renter || !item_id || !expire) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
- 
 
   const sql =
-    "INSERT INTO rented (renter, item_id, expire, price) VALUES (?, ?, ?, ?)";
-  const values = [renter, item_id, expire, price];
+    "INSERT INTO rented (renter, item_id, expire, price, days) VALUES (?, ?, ?, ?,?)";
+  const values = [renter, item_id, expire, price,days];
+  
+  const val = { renter, item_id, amount:price };
+  const payStatus =  addPayment(val);
 
   connection.query(sql, values, (err, result) => {
     if (err) {
@@ -81,7 +86,8 @@ const addRental = (req, res) => {
         .status(500)
         .json({ error: "Failed to add item to the database" });
     }
-    res.status(200).json({ result, msg: "Added item to DB successfully" });
+    
+    res.status(200).json({ result, payStatus, msg: "Added item to DB successfully" });
   });
 };
 
